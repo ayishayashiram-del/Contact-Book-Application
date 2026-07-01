@@ -1,18 +1,4 @@
-import json
-import os
-
-FILE_NAME = "contacts.json"
-
-# Load contacts
-if os.path.exists(FILE_NAME):
-    with open(FILE_NAME, "r") as file:
-        contacts = json.load(file)
-else:
-    contacts = {}
-
-def save_contacts():
-    with open(FILE_NAME, "w") as file:
-        json.dump(contacts, file, indent=4)
+contacts = {}
 
 while True:
     print("\n" + "=" * 40)
@@ -44,29 +30,30 @@ while True:
                 "Address": address
             }
 
-            save_contacts()
             print("✅ Contact added successfully!")
 
     elif choice == "2":
-        if not contacts:
+        if len(contacts) == 0:
             print("📒 No contacts available.")
         else:
             print("\n===== CONTACT LIST =====")
             for name, details in contacts.items():
-                print(f"\n👤 Name    : {name}")
-                print(f"📞 Phone   : {details['Phone']}")
-                print(f"📧 Email   : {details['Email']}")
-                print(f"🏠 Address : {details['Address']}")
+                print("----------------------------")
+                print("Name    :", name)
+                print("Phone   :", details["Phone"])
+                print("Email   :", details["Email"])
+                print("Address :", details["Address"])
 
     elif choice == "3":
         search = input("Enter contact name: ")
 
         if search in contacts:
             details = contacts[search]
-            print(f"\n👤 Name    : {search}")
-            print(f"📞 Phone   : {details['Phone']}")
-            print(f"📧 Email   : {details['Email']}")
-            print(f"🏠 Address : {details['Address']}")
+            print("\nContact Found")
+            print("Name    :", search)
+            print("Phone   :", details["Phone"])
+            print("Email   :", details["Email"])
+            print("Address :", details["Address"])
         else:
             print("❌ Contact not found.")
 
@@ -74,17 +61,14 @@ while True:
         name = input("Enter contact name to update: ")
 
         if name in contacts:
-            phone = input("New Phone: ")
-            email = input("New Email: ")
-            address = input("New Address: ")
+            phone = input("Enter New Phone Number: ")
+            email = input("Enter New Email: ")
+            address = input("Enter New Address: ")
 
-            contacts[name] = {
-                "Phone": phone,
-                "Email": email,
-                "Address": address
-            }
+            contacts[name]["Phone"] = phone
+            contacts[name]["Email"] = email
+            contacts[name]["Address"] = address
 
-            save_contacts()
             print("✅ Contact updated successfully!")
         else:
             print("❌ Contact not found.")
@@ -94,14 +78,13 @@ while True:
 
         if name in contacts:
             del contacts[name]
-            save_contacts()
             print("🗑️ Contact deleted successfully!")
         else:
             print("❌ Contact not found.")
 
     elif choice == "6":
         print("\n===== CONTACT SUMMARY =====")
-        print(f"📒 Total Contacts : {len(contacts)}")
+        print("📒 Total Contacts :", len(contacts))
 
     elif choice == "7":
         print("👋 Thank you for using Contact Book!")

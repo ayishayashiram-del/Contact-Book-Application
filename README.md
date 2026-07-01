@@ -23,7 +23,6 @@ The application helps users store and manage contact information efficiently thr
 ## 🛠️ Technologies Used
 
 - Python 3
-- JSON Module
 - File Handling
 - Dictionaries
 - Loops
